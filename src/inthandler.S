@@ -28,6 +28,27 @@ inthandler:
 	la $1, ~1
 	and k1,$1
 	mtc0 k1,C0_SR
+
+haltcheck: /*This label is just for mark*/
+	la $1, halt
+	bne $2, $1, haltcheckplus4 /*$2 contains EPC*/
+	nop
+
+	/*Overwrite $2 to skip halt loop*/
+	addiu $2, 8 /*8 = sizeof(b+nop)*/
+	mtc0 $2, C0_EPC
+
+haltcheckplus4:
+	addiu $1, 4 /*4 = sizeof(b)*/
+	bne $2, $1, haltcheckdone
+	nop
+
+	/*Overwrite $2 to skip halt loop*/
+	addiu $2, 4 /*4 = sizeof(nop)*/
+	mtc0 $2, C0_EPC
+
+haltcheckdone:
+
 	.set at
 
 	/*Save EPC now*/

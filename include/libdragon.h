@@ -58,5 +58,6 @@
 #include "timer.h"
 #include "exception.h"
 #include "dir.h"
+#include "halt.h"
 
 #endif
