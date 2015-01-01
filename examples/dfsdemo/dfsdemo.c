@@ -348,6 +348,9 @@ int main(void)
                 strcpy( path, dir );
                 strcat( path, list[cursor].filename );
 
+                printf("\n\n\nLoading module");
+                console_render();
+
                 module = Player_Load(path, 256, 0);
                 
                 /* Ensure that first part of module doesn't get cut off */
