@@ -1,6 +1,6 @@
 /* ========================================================================
  *
- * n64ld.x
+ * n64ld_cpp.x
  *
  * GNU Linker script for building an image that is set up for the N64
  * but still has the data factored into sections.  It is not directly
