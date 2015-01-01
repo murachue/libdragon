@@ -519,7 +519,7 @@ uint32_t rdp_load_texture( uint32_t texslot, uint32_t texloc, mirror_t mirror_en
  * @brief Load part of a sprite into RDP TMEM
  *
  * Given a sprite with vertical and horizontal slices defined, this function will load the slice specified in
- * offset into texture memory.  This is usefl for treating a large sprite as a tilemap.
+ * offset into texture memory.  This is useful for treating a large sprite as a tilemap.
  *
  * Given a sprite with 3 horizontal slices and two vertical slices, the offsets are as follows:
  *
