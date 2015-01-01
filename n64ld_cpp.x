@@ -36,22 +36,22 @@ SECTIONS {
       __text_start = . ;
 	  *(.text)
       *(.text.*)
-      *(.init)
-      *(.fini)
-	  *(.gnu.linkonce.t.*)
+      /* *(.init) */
+      /* *(.fini) */
+	  /* *(.gnu.linkonce.t.*) */
       __text_end  = . ;
    } > mem
 
    .eh_frame_hdr : { *(.eh_frame_hdr) } > mem
    .eh_frame : { KEEP (*(.eh_frame)) } > mem
    .gcc_except_table : { *(.gcc_except_table*) } > mem
-   .jcr : { KEEP (*(.jcr)) } > mem
+   /* .jcr : { KEEP (*(.jcr)) } > mem */
 
    .rodata : {
-     *(.rdata)
+     /* *(.rdata) */
      *(.rodata)
      *(.rodata.*)
-     *(.gnu.linkonce.r.*)
+     /* *(.gnu.linkonce.r.*) */
    } > mem
 
    .ctors : {
@@ -59,7 +59,7 @@ SECTIONS {
  	  __CTOR_LIST_SIZE__ = .;
 	    LONG((__CTOR_END__ - __CTOR_LIST__) / 4 - 1)
  	  __CTOR_LIST__ = .;
-	    *(.ctors)
+	    KEEP (*(.ctors))
 	    LONG(0)
 	  __CTOR_END__ = .;
    } > mem
@@ -77,16 +77,18 @@ SECTIONS {
 	  __data_start = . ;
          *(.data)
 		 *(.data.*)
-		 *(.gnu.linkonce.d.*)
+		 /* (.gnu.linkonce.d.*) */
    } > mem
 
    . = ALIGN(16);
    _gp = . + 0x8000;
 
+   /*
    .got : {
     *(.got.plt)
     *(.got)
    } > mem
+   */
 
    .sdata : {
     *(.sdata)
@@ -94,12 +96,14 @@ SECTIONS {
 	*(.gnu.linkonce.s.*)
    } > mem
 
+   /*
    .lit8 : {
     *(.lit8)
    } > mem
    .lit4 : {
     *(.lit4)
    } > mem
+   */
    __data_end = . ;
 
    . = ALIGN(4);
@@ -107,7 +111,7 @@ SECTIONS {
 	 __sbss_start = . ;
      *(.sbss)
      *(.sbss.*)
-	 *(.gnu.linkonce.sb.*)
+	 /* *(.gnu.linkonce.sb.*) */
      *(.scommon)
 	 __sbss_end = . ;
    } > mem
@@ -117,8 +121,8 @@ SECTIONS {
     __bss_start = . ;
 	*(.bss)
 	*(.bss*)
-	*(.gnu.linkonce.b.*)
-	*(COMMON)
+	/* *(.gnu.linkonce.b.*) */
+	/* *(COMMON) */
 	__bss_end = . ;
    } > mem
 
