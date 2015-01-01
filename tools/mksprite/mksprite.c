@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <memory.h>
 #include <stdint.h>
 #include <errno.h>
 #include <png.h>
