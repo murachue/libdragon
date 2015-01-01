@@ -481,7 +481,7 @@ static uint32_t __rdp_load_texture( uint32_t texslot, uint32_t texloc, mirror_t 
 
     /* Copying out only a chunk this time */
     __rdp_ringbuffer_queue( 0xF4000000 | (((sl << 2) & 0xFFF) << 12) | ((tl << 2) & 0xFFF) );
-    __rdp_ringbuffer_queue( (((sh << 2) & 0xFFF) << 12) | ((th << 2) & 0xFFF) );
+    __rdp_ringbuffer_queue( ((texslot & 0x7) << 24) | (((sh << 2) & 0xFFF) << 12) | ((th << 2) & 0xFFF) );
     __rdp_ringbuffer_send();
 
     /* Save sprite width and height for managed sprite commands */
