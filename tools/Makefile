@@ -1,16 +1,17 @@
 INSTALLDIR = $(N64_INST)
+CFLAGS = -m32
 
 all: build
 build: dumpdfs mkdfs mksprite chksum64 n64tool
 clean: chksum64-clean n64tool-clean dumpdfs-clean mkdfs-clean mksprite-clean
 
 chksum64: chksum64.c
-	gcc -o chksum64 chksum64.c
+	gcc $(CFLAGS) -o chksum64 chksum64.c
 chksum64-clean:
 	rm -rf chksum64
 
 n64tool: n64tool.c
-	gcc -o n64tool n64tool.c
+	gcc $(CFLAGS) -o n64tool n64tool.c
 n64tool-clean:
 	rm -rf n64tool
 
