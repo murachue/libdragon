@@ -209,6 +209,69 @@ void display_dir(direntry_t *list, int cursor, int page, int max, int count)
     }
 }
 
+static  short *mdn64_buf = NULL;
+static  int mdn64_bufsize;
+
+static BOOL N64_IsThere(void)
+{
+    return 1;
+}
+
+static int N64_Init(void)
+{
+    mdn64_buf = (short*)MikMod_malloc(mdn64_bufsize);
+    return VC_Init();
+}
+
+static void N64_Exit(void)
+{
+    VC_Exit();
+    MikMod_free(mdn64_buf);
+    mdn64_buf = NULL;
+}
+
+static void N64_Update(void)
+{
+    if (mdn64_buf) {
+        VC_WriteBytes((SBYTE*)mdn64_buf, mdn64_bufsize);
+        audio_write(mdn64_buf);
+    }
+}
+
+MIKMODAPI MDRIVER drv_n64={
+    NULL,
+    "n64",
+    "n64 driver",
+    255,255,
+    "n64drv",
+    NULL,
+    NULL,
+    N64_IsThere,
+    VC_SampleLoad,
+    VC_SampleUnload,
+    VC_SampleSpace,
+    VC_SampleLength,
+    N64_Init,
+    N64_Exit,
+    NULL,
+    VC_SetNumVoices,
+    VC_PlayStart,
+    VC_PlayStop,
+    N64_Update,
+    NULL,
+    VC_VoiceSetVolume,
+    VC_VoiceGetVolume,
+    VC_VoiceSetFrequency,
+    VC_VoiceGetFrequency,
+    VC_VoiceSetPanning,
+    VC_VoiceGetPanning,
+    VC_VoicePlay,
+    VC_VoiceStop,
+    VC_VoiceStopped,
+    VC_VoiceGetPosition,
+    VC_VoiceRealVolume
+};
+
 int main(void)
 {
     /* enable interrupts (on the CPU) */
@@ -218,10 +281,13 @@ int main(void)
     audio_init(44100,2);
     console_init();
 
+    mdn64_bufsize = audio_get_buffer_length() * 2 * sizeof(short);
+
     /* Initialize key detection */
     controller_init();
 
-    MikMod_RegisterAllDrivers();
+    //MikMod_RegisterAllDrivers();
+    MikMod_RegisterDriver(&drv_n64);
     MikMod_RegisterAllLoaders();
 
     md_mode = 0;
@@ -327,7 +393,9 @@ int main(void)
                             sw++;
                         }
 
-                        MikMod_Update();
+                        if(audio_can_write()) {
+                            MikMod_Update();
+                        }
 
                         controller_scan();
                         struct controller_data keys = get_keys_down();
