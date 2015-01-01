@@ -94,37 +94,37 @@ haltcheckdone:
 	sd $30,saveFC31
 
 	sdc1 $f0,saveFR00
-	sdc1 $f1,saveFR01
+	//sdc1 $f1,saveFR01
 	sdc1 $f2,saveFR02
-	sdc1 $f3,saveFR03
+	//sdc1 $f3,saveFR03
 	sdc1 $f4,saveFR04
-	sdc1 $f5,saveFR05
+	//sdc1 $f5,saveFR05
 	sdc1 $f6,saveFR06
-	sdc1 $f7,saveFR07
+	//sdc1 $f7,saveFR07
 	sdc1 $f8,saveFR08
-	sdc1 $f9,saveFR09
+	//sdc1 $f9,saveFR09
 	sdc1 $f10,saveFR10
-	sdc1 $f11,saveFR11
+	//sdc1 $f11,saveFR11
 	sdc1 $f12,saveFR12
-	sdc1 $f13,saveFR13
+	//sdc1 $f13,saveFR13
 	sdc1 $f14,saveFR14
-	sdc1 $f15,saveFR15
+	//sdc1 $f15,saveFR15
 	sdc1 $f16,saveFR16
-	sdc1 $f17,saveFR17
+	//sdc1 $f17,saveFR17
 	sdc1 $f18,saveFR18
-	sdc1 $f19,saveFR19
+	//sdc1 $f19,saveFR19
 	sdc1 $f20,saveFR20
-	sdc1 $f21,saveFR21
+	//sdc1 $f21,saveFR21
 	sdc1 $f22,saveFR22
-	sdc1 $f23,saveFR23
+	//sdc1 $f23,saveFR23
 	sdc1 $f24,saveFR24
-	sdc1 $f25,saveFR25
+	//sdc1 $f25,saveFR25
 	sdc1 $f26,saveFR26
-	sdc1 $f27,saveFR27
+	//sdc1 $f27,saveFR27
 	sdc1 $f28,saveFR28
-	sdc1 $f29,saveFR29
+	//sdc1 $f29,saveFR29
 	sdc1 $f30,saveFR30
-	sdc1 $f31,saveFR31
+	//sdc1 $f31,saveFR31
 
 	la sp,(exception_stack+65*1024-8)
 
@@ -208,37 +208,37 @@ endint:
 	mthi $30
 
 	ldc1 $f0,saveFR00
-	ldc1 $f1,saveFR01
+	//ldc1 $f1,saveFR01
 	ldc1 $f2,saveFR02
-	ldc1 $f3,saveFR03
+	//ldc1 $f3,saveFR03
 	ldc1 $f4,saveFR04
-	ldc1 $f5,saveFR05
+	//ldc1 $f5,saveFR05
 	ldc1 $f6,saveFR06
-	ldc1 $f7,saveFR07
+	//ldc1 $f7,saveFR07
 	ldc1 $f8,saveFR08
-	ldc1 $f9,saveFR09
+	//ldc1 $f9,saveFR09
 	ldc1 $f10,saveFR10
-	ldc1 $f11,saveFR11
+	//ldc1 $f11,saveFR11
 	ldc1 $f12,saveFR12
-	ldc1 $f13,saveFR13
+	//ldc1 $f13,saveFR13
 	ldc1 $f14,saveFR14
-	ldc1 $f15,saveFR15
+	//ldc1 $f15,saveFR15
 	ldc1 $f16,saveFR16
-	ldc1 $f17,saveFR17
+	//ldc1 $f17,saveFR17
 	ldc1 $f18,saveFR18
-	ldc1 $f19,saveFR19
+	//ldc1 $f19,saveFR19
 	ldc1 $f20,saveFR20
-	ldc1 $f21,saveFR21
+	//ldc1 $f21,saveFR21
 	ldc1 $f22,saveFR22
-	ldc1 $f23,saveFR23
+	//ldc1 $f23,saveFR23
 	ldc1 $f24,saveFR24
-	ldc1 $f25,saveFR25
+	//ldc1 $f25,saveFR25
 	ldc1 $f26,saveFR26
-	ldc1 $f27,saveFR27
+	//ldc1 $f27,saveFR27
 	ldc1 $f28,saveFR28
-	ldc1 $f29,saveFR29
+	//ldc1 $f29,saveFR29
 	ldc1 $f30,saveFR30
-	ldc1 $f31,saveFR31
+	//ldc1 $f31,saveFR31
 
 	ld $30,saveFC31
 	nop
@@ -297,36 +297,36 @@ endint:
 	.lcomm saveLO, 8
 	.lcomm saveFC31, 8
 	.lcomm saveFR00, 8
-	.lcomm saveFR01, 8
+	//.lcomm saveFR01, 8
 	.lcomm saveFR02, 8
-	.lcomm saveFR03, 8
+	//.lcomm saveFR03, 8
 	.lcomm saveFR04, 8
-	.lcomm saveFR05, 8
+	//.lcomm saveFR05, 8
 	.lcomm saveFR06, 8
-	.lcomm saveFR07, 8
+	//.lcomm saveFR07, 8
 	.lcomm saveFR08, 8
-	.lcomm saveFR09, 8
+	//.lcomm saveFR09, 8
 	.lcomm saveFR10, 8
-	.lcomm saveFR11, 8
+	//.lcomm saveFR11, 8
 	.lcomm saveFR12, 8
-	.lcomm saveFR13, 8
+	//.lcomm saveFR13, 8
 	.lcomm saveFR14, 8
-	.lcomm saveFR15, 8
+	//.lcomm saveFR15, 8
 	.lcomm saveFR16, 8
-	.lcomm saveFR17, 8
+	//.lcomm saveFR17, 8
 	.lcomm saveFR18, 8
-	.lcomm saveFR19, 8
+	//.lcomm saveFR19, 8
 	.lcomm saveFR20, 8
-	.lcomm saveFR21, 8
+	//.lcomm saveFR21, 8
 	.lcomm saveFR22, 8
-	.lcomm saveFR23, 8
+	//.lcomm saveFR23, 8
 	.lcomm saveFR24, 8
-	.lcomm saveFR25, 8
+	//.lcomm saveFR25, 8
 	.lcomm saveFR26, 8
-	.lcomm saveFR27, 8
+	//.lcomm saveFR27, 8
 	.lcomm saveFR28, 8
-	.lcomm saveFR29, 8
+	//.lcomm saveFR29, 8
 	.lcomm saveFR30, 8
-	.lcomm saveFR31, 8
+	//.lcomm saveFR31, 8
 	.lcomm exception_stack, 65*1024
 

@@ -15,7 +15,8 @@ _start:
 	sw v0,(0xbfc007fc)			/* magic N64 hardware init */
 
 	/* a bit from libgloss so we start at a known state */
-	li v0,SR_CU1|SR_PE|SR_FR|SR_KX|SR_SX|SR_UX
+	/* note: newlib assume ~SR_FR... */
+	li v0,SR_CU1|SR_PE|/*SR_FR|*/SR_KX|SR_SX|SR_UX
 	mtc0 v0,C0_SR
 	mtc0 $0,C0_CAUSE
 
