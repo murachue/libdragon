@@ -110,7 +110,8 @@ static void __controller_exec_PIF( void *inblock, void *outblock )
 
     __SI_DMA_wait();
 
-    SI_regs->DRAM_addr = inblock_temp; // only cares about 23:0
+    /* Real console only cares about 23:0, but Project64 cares even 31:24. Without masking you cannot control at all! */
+    SI_regs->DRAM_addr = (void*)((uintptr_t)inblock_temp & 0x00FFFFFF);
     MEMORY_BARRIER();
     SI_regs->PIF_addr_write = PIF_RAM; // is it really ever anything else?
     MEMORY_BARRIER();
@@ -119,7 +120,8 @@ static void __controller_exec_PIF( void *inblock, void *outblock )
 
     data_cache_hit_writeback_invalidate(outblock_temp, 64);
 
-    SI_regs->DRAM_addr = outblock_temp;
+    /* Masking for same reason. */
+    SI_regs->DRAM_addr = (void*)((uintptr_t)outblock_temp & 0x00FFFFFF);
     MEMORY_BARRIER();
     SI_regs->PIF_addr_read = PIF_RAM;
     MEMORY_BARRIER();
