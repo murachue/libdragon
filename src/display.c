@@ -473,6 +473,8 @@ void display_show( display_context_t disp )
     }
 
     enable_interrupts();
+
+    halt();
 }
 
 /** @} */ /* display */
