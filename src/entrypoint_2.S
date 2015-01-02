@@ -19,6 +19,9 @@ _start:
 	mtc0 v0,C0_SR
 	mtc0 $0,C0_CAUSE
 
+	/* already copied (1MB that is enough) by 2nd-boot. skip. */
+	/* and if you want it, use PI DMA! (dont forget to invalidate that area...) */
+#if 1
 	/* copy code and data */
 	la a0, __text_start
 	la a1, __data_end
@@ -38,6 +41,7 @@ data_init:
 	sub a1,a0
 	jal data_cache_hit_writeback_invalidate
 	nop
+#endif
 
 	/* fill .sbss with 0s */
 	la a0, __sbss_start
@@ -74,13 +78,13 @@ bss_init:
 	/* load interrupt vector */
 	la t0,intvector
 	la t1,0xa0000000
-	la t2,4
+	la t2,4         # # of words of intvector. note: "la" takes 2 ops!
 loadintvectorloop:
 	lw t3,(t0)
-	sw t3,0(t1)
-	sw t3,0x80(t1)
-	sw t3,0x100(t1)
-	sw t3,0x180(t1)
+	sw t3,0(t1)     # TLB refill, EXL = 0
+	sw t3,0x80(t1)  # XTLB refill, EXL = 0 (X = 64-bit TLB)
+	sw t3,0x100(t1) # Cache Error
+	sw t3,0x180(t1) # Others (ex. SysCall)
 	/* sync */
 	cache HIT_INVALIDATE_I,0(t1)
 	cache HIT_INVALIDATE_I,0x80(t1)
