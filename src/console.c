@@ -266,6 +266,11 @@ static void __console_render()
                 return;
             }
 
+            if(t_buf == ' ')
+            {
+                continue;
+            }
+
             /* Draw to the screen using the forecolor and backcolor set in the graphics
              * subsystem */
             graphics_draw_character( dc, 20 + 8 * x, 16 + 8 * y, t_buf );
