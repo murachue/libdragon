@@ -26,7 +26,7 @@ _start:
 
 	/* already copied (1MB that is enough) by 2nd-boot. skip. */
 	/* and if you want it, use PI DMA! (dont forget to invalidate that area...) */
-#if 1
+#if 0
 	/* copy code and data */
 	la a0, __text_start
 	la a1, __data_end
