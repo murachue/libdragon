@@ -5,6 +5,9 @@
          It exits from this inf-loop by inthandler.
 */
 
+	.set at
+	.set noreorder
+
 	.global halt
 halt:
 	b halt

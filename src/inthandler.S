@@ -8,6 +8,10 @@
 
 #include "regs.S"
 
+	.set at
+	.set reorder
+	.set mips64
+
 inthandler:
 	.global inthandler
 
@@ -17,7 +21,6 @@ inthandler:
 	.set noat
 	/*Fetch exception pc off cop#0*/
 	mfc0 $2,C0_EPC
-	nop
 
 	la k1,save01
 	sd $1,(k1)
@@ -32,7 +35,6 @@ inthandler:
 haltcheck: /*This label is just for mark*/
 	la $1, halt
 	bne $2, $1, haltcheckplus4 /*$2 contains EPC*/
-	nop
 
 	/*Overwrite $2 to skip halt loop*/
 	addiu $2, 8 /*8 = sizeof(b+nop)*/
@@ -41,7 +43,6 @@ haltcheck: /*This label is just for mark*/
 haltcheckplus4:
 	addiu $1, 4 /*4 = sizeof(b)*/
 	bne $2, $1, haltcheckdone
-	nop
 
 	/*Overwrite $2 to skip halt loop*/
 	addiu $2, 4 /*4 = sizeof(nop)*/
@@ -90,7 +91,6 @@ haltcheckdone:
 	mfhi $30
 	sd $30,saveHI
 	cfc1 $30,$f31
-	nop
 	sd $30,saveFC31
 
 	sdc1 $f0,saveFR00
@@ -131,43 +131,34 @@ haltcheckdone:
 	mfc0 k1,C0_CAUSE
 	andi $30,k1,0xff
 	beqz $30, justaninterrupt
-	nop
 
 	/*:(*/
 	jal __onCriticalException
-	nop
 
 justaninterrupt:
 	/* check for "pre-NMI" (reset) */
 	andi $30,k1,0x1000
 	beqz $30, notprenmi
-	nop
 
 	/* handle reset */
 	jal __onResetException
-	nop
 
 	j endint
-	nop
 notprenmi:
 
 	/* check for count=compare */
 	and $30,k1,0x8000
 	beqz $30,notcount
-	nop
 	mtc0 $0,$11
 
 	/* handle timer exception */
 	jal __TI_handler
-	nop
 
 	j endint
-	nop
 notcount:
 
 	/* pass anything else along to handler */
 	jal __MI_handler
-	nop
 
 endint:
 	/* restore GPRs */
@@ -241,7 +232,6 @@ endint:
 	//ldc1 $f31,saveFR31
 
 	ld $30,saveFC31
-	nop
 
 	ctc1 $30,$f31
 
@@ -251,7 +241,6 @@ endint:
 	ld $1,($1)
 
 	eret
-	nop
 	.set at
 
 	.section .bss

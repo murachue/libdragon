@@ -4,7 +4,11 @@
 
 #include "regs.S"
 
-	.section .boot
+	.set at
+	.set reorder
+	.set mips64
+
+	.section .boot, "x", @progbits
 	.global _start
 _start:
 	lw t0, 0x80000318			/* memory size */
@@ -34,14 +38,12 @@ data_init:
 	sw t0,(a0)
 	addiu a0,4
 	bltu a0,a1, data_init
-	nop
 
 	/* make sure code and data are actually written */
 	la a0,__text_start
 	la a1,__data_end
 	sub a1,a0
 	jal data_cache_hit_writeback_invalidate
-	nop
 #endif
 
 	/* fill .bss with 0s */
@@ -51,14 +53,12 @@ bss_init:
 	sd $0,(a0)
 	addiu a0,8
 	bltu a0,a1, bss_init
-	nop
 
 	/* make sure .bss is actually written */
 	la a0,__bss_start
 	la a1,__bss_end
 	sub a1,a0
 	jal data_cache_hit_writeback_invalidate
-	nop
 
 	/* load interrupt vector */
 	la t0,intvector
@@ -79,18 +79,14 @@ loadintvectorloop:
 	addi t1,4
 	addiu t2,-1
 	bnez t2,loadintvectorloop
-	nop
 
 	jal main					/* call main app */
-	nop
 
 deadloop:
 	j deadloop
-	nop
 
 intvector:
 	la k1,inthandler
 	jr k1
-	nop
 
 	.section .code
