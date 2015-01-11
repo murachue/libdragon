@@ -22,6 +22,11 @@ OUTPUT_ARCH (mips)
 EXTERN (_start)
 ENTRY (_start)
 
+MEMORY
+{
+	mem	:	ORIGIN = 0x80000400, LENGTH =  4M-0x0400
+}
+
 SECTIONS {
    /* Start address of code is 1K up in uncached, unmapped RAM.  We have
     * to be at least this far up in order to not interfere with the cart
@@ -41,13 +46,15 @@ SECTIONS {
 	  . = ALIGN(16);
       __text_start = . ;
       *(.text)
+      *(.text.*)
       *(.ctors)
       *(.dtors)
       *(.rodata)
+      *(.rodata.*)
 	  *(.init)
       *(.fini)
       __text_end  = . ;
-   }
+   } > mem
 
 
    /* Data section has relocation address at start of RAM in cached,
@@ -69,13 +76,15 @@ SECTIONS {
 	  . = ALIGN(16);
       __data_start = . ;
          *(.data)
+         *(.data.*)
          *(.lit8)
          *(.lit4) ;
      /* _gp = ALIGN(16) + 0x7ff0 ;*/
 /*	 _gp = . + 0x7ff0; */
 	 . = ALIGN(16);
-	 _gp = . ;
+	 _gp = . + 0x8000;
          *(.sdata)
+         *(.sdata.*)
       __data_end = . ;
 /*
       __bss_start = . ;
@@ -83,20 +92,22 @@ SECTIONS {
          *(.sbss)
          *(COMMON)
          *(.bss)
-      /* XXX Force 8-byte end alignment and update startup code */
+      /* XXX Force 8-byte end alignment and update startup code * /
 
       __bss_end = . ;
 */
-   }
+   } > mem
 
    .bss (NOLOAD) :  {
        	__bss_start = . ;
        	*(.scommon)
 	*(.sbss)
+	*(.sbss.*)
 	*(COMMON)
 	*(.bss)
+	*(.bss.*)
 	__bss_end = . ;
 	end = . ;
-   }
+   } > mem
 
 }
