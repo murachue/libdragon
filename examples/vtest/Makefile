@@ -6,13 +6,13 @@ MKSPRITEPATH = $(ROOTDIR)/bin/mksprite
 HEADERPATH = $(ROOTDIR)/lib
 N64TOOL = $(ROOTDIR)/bin/n64tool
 HEADERNAME = header
-LINK_FLAGS = -G0 -L$(ROOTDIR)/lib -L$(ROOTDIR)/mips64-elf/lib -ldragon -lc -lm -ldragonsys -Tn64ld.x
+LINK_FLAGS = -G0 -L$(ROOTDIR)/lib -L$(ROOTDIR)/mips64-elf/lib -ldragon -lc -lm -ldragonsys -Tn64ld.x -nostartfiles
 PROG_NAME = VidResTest
 CFLAGS = -std=gnu99 -mabi=32 -march=vr4300 -mtune=vr4300 -G0 -Wall -Werror -I$(ROOTDIR)/include -I$(ROOTDIR)/mips64-elf/include
 ASFLAGS = -mtune=vr4300 -march=vr4300
 CC = $(GCCN64PREFIX)gcc
 AS = $(GCCN64PREFIX)as
-LD = $(GCCN64PREFIX)ld
+LD = $(GCCN64PREFIX)gcc
 OBJCOPY = $(GCCN64PREFIX)objcopy
 
 OBJS = main.o
