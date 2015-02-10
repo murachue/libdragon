@@ -75,8 +75,11 @@ bss_init:
 	jal data_cache_hit_writeback_invalidate
 
 	/* load interrupt vector */
+	/* use 0x80000000 (and much CACHEs) instead of 0xa0000000 (and some CACHEs) */
+	/* to support emulators that have broken translated block flushing code */
+	/* (ex. mupen64plus 40d0399's cached-interpreter and dynamic-recompiler). */
 	la t0,intvector
-	la t1,0xa0000000
+	la t1,0x80000000
 	la t2,4         # # of words of intvector. note: "la" takes 2 ops!
 loadintvectorloop:
 	lw t3,(t0)
@@ -85,6 +88,10 @@ loadintvectorloop:
 	sw t3,0x100(t1) # Cache Error
 	sw t3,0x180(t1) # Others (ex. SysCall)
 	/* sync */
+	cache HIT_WRITEBACK_D,0(t1)
+	cache HIT_WRITEBACK_D,0x80(t1)
+	cache HIT_WRITEBACK_D,0x100(t1)
+	cache HIT_WRITEBACK_D,0x180(t1)
 	cache HIT_INVALIDATE_I,0(t1)
 	cache HIT_INVALIDATE_I,0x80(t1)
 	cache HIT_INVALIDATE_I,0x100(t1)
